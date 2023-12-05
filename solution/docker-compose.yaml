@@ -11,4 +11,10 @@ services:
     ports:
       - "9393:9300"
     restart: always
-
+  prometheus:
+    image: prom/prometheus:v2.22.0
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
