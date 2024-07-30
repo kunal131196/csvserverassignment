@@ -1,0 +1,87 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "HTTP Requests Table",
+    "uid": null,
+    "version": 1,
+    "schemaVersion": 30,
+    "panels": [
+      {
+        "type": "table",
+        "title": "HTTP Requests Overview",
+        "gridPos": {
+          "h": 10,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "sum by(uri) ({__name__=~\".*_seconds_count\", container_name=\"cname\"})",
+            "legendFormat": "{{uri}}",
+            "refId": "A"
+          },
+          {
+            "expr": "sum by(uri) ({__name__=~\".*_seconds_count\", status=\"500\", container_name=\"cname\"})",
+            "legendFormat": "{{uri}}",
+            "refId": "B"
+          },
+          {
+            "expr": "sum by(uri) ({__name__=~\".*_seconds_count\", status=\"400\", container_name=\"cname\"})",
+            "legendFormat": "{{uri}}",
+            "refId": "C"
+          },
+          {
+            "expr": "sum by(uri) ({__name__=~\".*_seconds_count\", container_name=\"cname\"}) - sum by(uri) ({__name__=~\".*_seconds_count\", status=~\"2..|3..|400|500\", container_name=\"cname\"})",
+            "legendFormat": "{{uri}}",
+            "refId": "D"
+          },
+          {
+            "expr": "avg by(uri) ({__name__=~\".*_seconds_count\", container_name=\"cname\"})",
+            "legendFormat": "{{uri}}",
+            "refId": "E"
+          }
+        ],
+        "transformations": [
+          {
+            "id": "groupBy",
+            "options": {
+              "fields": {
+                "uri": "URI"
+              }
+            }
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {},
+              "indexByName": {
+                "URI": 0,
+                "Count of 500": 1,
+                "Count of 400": 2,
+                "Other Status Count": 3,
+                "Average Count": 4
+              },
+              "renameByName": {
+                "A": "URI",
+                "B": "Count of 500",
+                "C": "Count of 400",
+                "D": "Other Status Count",
+                "E": "Average Count"
+              }
+            }
+          }
+        ],
+        "options": {
+          "showHeader": true
+        },
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        }
+      }
+    ]
+  },
+  "overwrite": false
+}
