@@ -1,7 +1,7 @@
 {
   "dashboard": {
     "id": null,
-    "title": "HTTP Requests Table",
+    "title": "HTTP Request",
     "uid": null,
     "version": 1,
     "schemaVersion": 30,
@@ -45,23 +45,16 @@
         ],
         "transformations": [
           {
-            "id": "groupBy",
-            "options": {
-              "fields": {
-                "uri": "URI"
-              }
-            }
-          },
-          {
             "id": "organize",
             "options": {
               "excludeByName": {},
               "indexByName": {
-                "URI": 0,
-                "Count of 500": 1,
-                "Count of 400": 2,
-                "Other Status Count": 3,
-                "Average Count": 4
+                "Time": 0,
+                "A": 1,
+                "B": 2,
+                "C": 3,
+                "D": 4,
+                "E": 5
               },
               "renameByName": {
                 "A": "URI",
@@ -81,7 +74,7 @@
           "overrides": []
         }
       }
-    ]
-  },
-  "overwrite": false
+    ],
+    "overwrite": true
+  }
 }
